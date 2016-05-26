@@ -21,16 +21,16 @@ public class SourceOracleDAO {
         OracleDataSource ods = null;
         Properties prop = new Properties();
         try {
-            FileInputStream f = new FileInputStream("src\\java\\Model\\connexion.properties");
-            prop.load(f);
+         //  FileInputStream f = new FileInputStream("connexion.properties");
+          // prop.load(f);
             ods = new OracleDataSource();
-            ods.setDriverType(prop.getProperty("pilote"));
-            ods.setPortNumber(Integer.parseInt(prop.getProperty("port")));
-            ods.setServiceName(prop.getProperty("service"));
-            ods.setUser(prop.getProperty("user"));
-            ods.setPassword(prop.getProperty("pwd"));
-            ods.setServerName(prop.getProperty("serveur"));
-            f.close();
+            ods.setDriverType("thin");
+            ods.setPortNumber(1521);
+            ods.setServiceName("orcl.univ-lyon1.fr");
+            ods.setUser("p1422645");
+            ods.setPassword("234452");
+            ods.setServerName("iutdoua-oracle.univ-lyon1.fr");
+         //   f.close();
 
         } catch (Exception e) {
             System.out.println("ods: " + e.getMessage());
