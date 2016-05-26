@@ -25,7 +25,7 @@ public class DaoJava {
     }
 
     public void lireLesEtu(List<Etudiant> lesEtus) throws SQLException {    
-        String requete = "select * from JAVA_WEB_G2S3";
+        String requete = "select * from JAVA_WEB_G2S3 where nom like'%?' and prenom like'%?";
         PreparedStatement pstmt = connexion.prepareStatement(requete);
         ResultSet rset = pstmt.executeQuery(requete);
         while (rset.next()) {       // traitement du résulat
