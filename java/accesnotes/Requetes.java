@@ -32,10 +32,8 @@ public class Requetes {
         erreur_matiere = false;
         listeEtudiants1 = new ArrayList<>();
         listeEtudiants2 = new ArrayList<>();
+        System.out.println(SourceOracleDAO.getSource());
         if (matiere.equalsIgnoreCase(MATIERE1)) {
-            /*  listeEtudiants1.add(new Etudiant("DUPOND", "Jean", 11.50));
-             listeEtudiants1.add(new Etudiant("DURAND", "Jacques", 12.50));
-             listeEtudiants1.add(new Etudiant("GABRIELE", "Patricia", 13.50));*/
             try {
                 DaoBDA daoBD = new DaoBDA(SourceOracleDAO.getSource().getConnection());
                 daoBD.lireLesEtu(listeEtudiants1);

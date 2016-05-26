@@ -17,14 +17,11 @@ import oracle.jdbc.pool.OracleDataSource;
  */
 public class SourceOracleDAO {
 
-    private SourceOracleDAO() throws SQLException {
-    }
-
     public static DataSource getSource() {
         OracleDataSource ods = null;
         Properties prop = new Properties();
         try {
-            FileInputStream f = new FileInputStream("src/connexion.properties");
+            FileInputStream f = new FileInputStream("src\\java\\Model\\connexion.properties");
             prop.load(f);
             ods = new OracleDataSource();
             ods.setDriverType(prop.getProperty("pilote"));
@@ -36,7 +33,7 @@ public class SourceOracleDAO {
             f.close();
 
         } catch (Exception e) {
-            System.out.println("ods" + e.getMessage());
+            System.out.println("ods: " + e.getMessage());
         }
         return ods;
     }
