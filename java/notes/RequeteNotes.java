@@ -42,6 +42,16 @@ public class RequeteNotes extends HttpServlet {
             this.getServletContext().getRequestDispatcher("/erreur.jsp").forward(request, response);
             // ou response.sendRedirect("/erreur.jsp");
         }
+        
+        if(nom.equalsIgnoreCase("?")){
+            
+        }
+        if(prenom.equalsIgnoreCase("?")){
+            
+        }
+        if(matiere.equalsIgnoreCase("?")){
+            
+        }
 
         Requetes req;
         req = new Requetes(nom, prenom, matiere);
@@ -52,7 +62,7 @@ public class RequeteNotes extends HttpServlet {
         if (result != OK) {
             switch (result) {
                 case NOT_FOUND:
-                    erreur = "nom incorecte";
+                    erreur = "nom incorect";
                     break;
                 default:
                     erreur = "Problème d'accès";

@@ -25,10 +25,10 @@ public class DaoBDA {
     }
 
     public Etudiant GetEtu(Etudiant etu) throws SQLException {    
-        String requete = "select * from BDA_G2S3 where  nom =? and prenom=? ";
+        String requete = "select * from BDA_G2S3 where  nom like ? and prenom like ? ";
         PreparedStatement pstmt = connexion.prepareStatement(requete);
-        pstmt.setString(1, etu.getNom());
-        pstmt.setString(2, etu.getPrenom());
+        pstmt.setString(1, "%"+etu.getNom().toUpperCase());
+        pstmt.setString(2, "%"+etu.getPrenom().toUpperCase());
          System.out.println("etu"+etu.getNom());
         ResultSet rset = pstmt.executeQuery(requete);
         while (rset.next()) {       // traitement du résulat
