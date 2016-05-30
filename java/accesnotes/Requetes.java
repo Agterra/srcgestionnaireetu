@@ -66,8 +66,9 @@ public class Requetes {
             }
         } else {
             try {
-
+                   
                 etu = daoBD.GetEtu(etu);
+                
                if(etu!=null){
                     trouve = true;
                }
