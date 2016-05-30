@@ -25,7 +25,7 @@ public class DaoJava {
     }
 
     public Etudiant GetEtu(Etudiant etu) throws SQLException {    
-        String requete = "select * from JAVA_WEB_G2S3 where nom like'%?' and prenom like'%?";
+        String requete = "select * from JAVA_WEB_G2S3 where nom like'%?' and prenom like'%?'";
         PreparedStatement pstmt = connexion.prepareStatement(requete);
         ResultSet rset = pstmt.executeQuery(requete);
         while (rset.next()) {       // traitement du résulat
@@ -40,5 +40,21 @@ public class DaoJava {
         rset.close();
         pstmt.close();
         return temp;
+    }
+    public double getMoy() throws SQLException {  
+        Double note=0d;
+        String requete = "select avg(note) from JAVA_WEB_G2S3 ";
+        PreparedStatement pstmt = connexion.prepareStatement(requete);
+        ResultSet rset = pstmt.executeQuery(requete);
+        while (rset.next()) {       // traitement du résulat
+            
+            
+            note = rset.getDouble(1);
+                       
+        }
+        
+        rset.close();
+        pstmt.close();
+        return note;
     }
 }

@@ -22,7 +22,8 @@ public class Requetes {
     public static final int NOT_FOUND = 2;
     public static final int ERREUR_MATIERE = 3;
     public static final int ERROR = -1;
-
+    private static DaoJava daoJava;
+    private static DaoBDA daoBD;
     public static List<Etudiant> listeEtudiants1;
     public static List<Etudiant> listeEtudiants2;
 
@@ -30,10 +31,14 @@ public class Requetes {
         etu = new Etudiant(nom, prenom, 0.0); // en entrée
         Requetes.matiere = matiere;
         erreur_matiere = false;
-      
-        System.out.println(SourceOracleDAO.getSource());
-       
-        
+
+        try {
+
+            daoJava = new DaoJava(SourceOracleDAO.getSource().getConnection());
+            daoBD = new DaoBDA(SourceOracleDAO.getSource().getConnection());
+        } catch (SQLException e) {
+            System.out.println("Erreur: " + e.getMessage());
+        }
     }
 
     public Etudiant getEtu() {
@@ -46,22 +51,27 @@ public class Requetes {
             return ERREUR_MATIERE;
         }
         /* Recherche étudiant */
-     //   Etudiant etudiant = null;
+        //   Etudiant etudiant = null;
 
-        boolean trouve = false; 
+        boolean trouve = false;
         if (matiere.equalsIgnoreCase(MATIERE2)) {
             try {
-                    DaoJava daoJava = new DaoJava(SourceOracleDAO.getSource().getConnection());
-                    etu=daoJava.GetEtu(etu);
 
-                } catch (SQLException e) {
-                    System.out.println("Erreur: " + e.getMessage());
-                }
+                etu = daoJava.GetEtu(etu);
+                if(etu!=null){
+                    trouve = true;
+               }
+            } catch (SQLException e) {
+                System.out.println("Erreur: " + e.getMessage());
+            }
         } else {
             try {
-                DaoBDA daoBD = new DaoBDA(SourceOracleDAO.getSource().getConnection());
-                etu=daoBD.GetEtu(etu);
 
+                etu = daoBD.GetEtu(etu);
+               if(etu!=null){
+                    trouve = true;
+               }
+               
             } catch (SQLException e) {
                 System.out.println("Erreur: " + e.getMessage());
             }
@@ -76,21 +86,19 @@ public class Requetes {
 
     public static double getMoyenne() {
         /* calcul et renvoi de la moyenne */
-        double moyenne;
+        double moyenne=0;
         double tot = 0;
         int nombre = 0;
-        if (matiere.equalsIgnoreCase(MATIERE1)) {
-            for (Etudiant testEtu : listeEtudiants1) {
-                tot = tot + testEtu.getNote();
-                nombre++;
+        try{
+            if (matiere.equalsIgnoreCase(MATIERE1)) {
+                moyenne=daoBD.getMoy();
+            } else {
+                moyenne=daoJava.getMoy();
             }
-        } else {
-            for (Etudiant testEtu : listeEtudiants2) {
-                tot = tot + testEtu.getNote();
-                nombre++;
-            }
+        }catch(Exception e){
+            System.out.println("Erreur: " + e.getMessage());
         }
-        moyenne = (int) ((tot / nombre) * 100 + 0.5) / 100.0;
+   //     moyenne = (int) ((tot / nombre) * 100 + 0.5) / 100.0;
 
         return moyenne;
 

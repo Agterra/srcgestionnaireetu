@@ -45,13 +45,14 @@ public class RequeteNotes extends HttpServlet {
 
         Requetes req;
         req = new Requetes(nom, prenom, matiere);
-        int result = req.rechEtu();
+        int result = Requetes.rechEtu();
         Etudiant etudiant = req.getEtu();
+        
 
         if (result != OK) {
             switch (result) {
                 case NOT_FOUND:
-                    erreur = "Vos identifiants n'ont pas permis de vous retrouver dans la base de données";
+                    erreur = "nom incorecte";
                     break;
                 default:
                     erreur = "Problème d'accès";
