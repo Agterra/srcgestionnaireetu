@@ -45,7 +45,7 @@ public class RequeteNotes extends HttpServlet {
 
         Requetes req;
         req = new Requetes(nom, prenom, matiere);
-        int result = Requetes.rechEtu();
+        int result = req.rechEtu();
         Etudiant etudiant = req.getEtu();
 
         if (result != OK) {

@@ -30,30 +30,10 @@ public class Requetes {
         etu = new Etudiant(nom, prenom, 0.0); // en entrée
         Requetes.matiere = matiere;
         erreur_matiere = false;
-        listeEtudiants1 = new ArrayList<>();
-        listeEtudiants2 = new ArrayList<>();
+      
         System.out.println(SourceOracleDAO.getSource());
-        if (matiere.equalsIgnoreCase(MATIERE1)) {
-            try {
-                DaoBDA daoBD = new DaoBDA(SourceOracleDAO.getSource().getConnection());
-                daoBD.lireLesEtu(listeEtudiants1);
-
-            } catch (SQLException e) {
-                System.out.println("Erreur: " + e.getMessage());
-            }
-        } else {
-            if (matiere.equalsIgnoreCase(MATIERE2)) {
-                try {
-                    DaoJava daoJava = new DaoJava(SourceOracleDAO.getSource().getConnection());
-                    daoJava.lireLesEtu(listeEtudiants2);
-
-                } catch (SQLException e) {
-                    System.out.println("Erreur: " + e.getMessage());
-                }
-            } else {
-                erreur_matiere = true;
-            }
-        }
+       
+        
     }
 
     public Etudiant getEtu() {
@@ -68,20 +48,22 @@ public class Requetes {
         /* Recherche étudiant */
      //   Etudiant etudiant = null;
 
-        boolean trouve = false; //= false;
-        if (matiere.equalsIgnoreCase(MATIERE1)) {
-            for (Etudiant testEtu : listeEtudiants1) {
-                if (testEtu.getNom().toUpperCase().contains(etu.getNom().toUpperCase()) && testEtu.getPrenom().toUpperCase().contains(etu.getPrenom().toUpperCase())) {
-                    trouve = true;
-                    etu = testEtu;
+        boolean trouve = false; 
+        if (matiere.equalsIgnoreCase(MATIERE2)) {
+            try {
+                    DaoJava daoJava = new DaoJava(SourceOracleDAO.getSource().getConnection());
+                    etu=daoJava.GetEtu(etu);
+
+                } catch (SQLException e) {
+                    System.out.println("Erreur: " + e.getMessage());
                 }
-            }
         } else {
-            for (Etudiant testEtu : listeEtudiants2) {
-                if (testEtu.getNom().toUpperCase().contains(etu.getNom().toUpperCase()) && testEtu.getPrenom().toUpperCase().contains(etu.getPrenom().toUpperCase())) {
-                    trouve = true;
-                    etu = testEtu;
-                }
+            try {
+                DaoBDA daoBD = new DaoBDA(SourceOracleDAO.getSource().getConnection());
+                etu=daoBD.GetEtu(etu);
+
+            } catch (SQLException e) {
+                System.out.println("Erreur: " + e.getMessage());
             }
 
         }

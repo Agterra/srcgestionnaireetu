@@ -19,12 +19,12 @@ import notes.Etudiant;
  */
 public class DaoJava {
       private final Connection connexion;
-
+      private Etudiant temp;
     public DaoJava(Connection connexion) throws SQLException {
         this.connexion = connexion;     
     }
 
-    public void lireLesEtu(List<Etudiant> lesEtus) throws SQLException {    
+    public Etudiant GetEtu(Etudiant etu) throws SQLException {    
         String requete = "select * from JAVA_WEB_G2S3 where nom like'%?' and prenom like'%?";
         PreparedStatement pstmt = connexion.prepareStatement(requete);
         ResultSet rset = pstmt.executeQuery(requete);
@@ -33,10 +33,12 @@ public class DaoJava {
             String nom = rset.getString(1);
             String prenom = rset.getString(2);
             Double note = rset.getDouble(3);
-            Etudiant temp = new Etudiant(nom,prenom,note);
-            lesEtus.add(temp);
+           temp = new Etudiant(nom,prenom,note);
+            
         }
+        
         rset.close();
-        pstmt.close();     
+        pstmt.close();
+        return temp;
     }
 }
