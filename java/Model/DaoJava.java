@@ -18,44 +18,50 @@ import notes.Etudiant;
  * @author Claire
  */
 public class DaoJava {
-      private final Connection connexion;
-      private Etudiant temp;
+
+    private final Connection connexion;
+    private Etudiant temp;
+
     public DaoJava(Connection connexion) throws SQLException {
-        this.connexion = connexion;     
+        this.connexion = connexion;
     }
 
-    public Etudiant GetEtu(Etudiant etu) throws SQLException {    
-        String requete = "select * from JAVA_WEB_G2S3 where nom =? and prenom=?";
+    public void GetEtu(Etudiant etu) throws SQLException {
+
+        String requete = "select * from JAVA_WEB_G2S3 where upper(nom) like ? and upper(prenom) like ? ";
         PreparedStatement pstmt = connexion.prepareStatement(requete);
-        pstmt.setString(1, etu.getNom());
-        pstmt.setString(2, etu.getPrenom());
-       
-        ResultSet rset = pstmt.executeQuery(requete);
+        pstmt.setString(1, "%" + etu.getNom().toUpperCase() + "&");
+        pstmt.setString(2, "%" + etu.getPrenom().toUpperCase() + "&");
+
+        ResultSet rset = pstmt.executeQuery();
+
         while (rset.next()) {       // traitement du résulat
-            
+
             String nom = rset.getString(1);
             String prenom = rset.getString(2);
-            Double note = rset.getDouble(3);
-           temp = new Etudiant(nom,prenom,note);
-            
+            double note = rset.getDouble(3);
+            etu.setNom(nom);
+            etu.setPrenom(prenom);
+            etu.setNote(note);
+            System.out.println("aa " + nom);
         }
-        
+
         rset.close();
         pstmt.close();
-        return temp;
+
     }
-    public double getMoy() throws SQLException {  
-        Double note=0d;
+
+    public double getMoy() throws SQLException {
+        Double note = 0d;
         String requete = "select avg(note) from JAVA_WEB_G2S3 ";
         PreparedStatement pstmt = connexion.prepareStatement(requete);
         ResultSet rset = pstmt.executeQuery(requete);
         while (rset.next()) {       // traitement du résulat
-            
-            
+
             note = rset.getDouble(1);
-                       
+
         }
-        
+
         rset.close();
         pstmt.close();
         return note;

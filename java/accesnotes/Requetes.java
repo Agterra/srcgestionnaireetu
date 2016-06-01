@@ -34,8 +34,8 @@ public class Requetes {
 
         try {
 
-            daoJava = new DaoJava(SourceOracleDAO.getSource().getConnection());
-            daoBD = new DaoBDA(SourceOracleDAO.getSource().getConnection());
+            daoJava = new DaoJava(SourceOracleDAO.getSource());
+            daoBD = new DaoBDA(SourceOracleDAO.getSource());
         } catch (SQLException e) {
             System.out.println("Erreur: " + e.getMessage());
         }
@@ -57,7 +57,8 @@ public class Requetes {
         if (matiere.equalsIgnoreCase(MATIERE2)) {
             try {
 
-                etu = daoJava.GetEtu(etu);
+             daoJava.GetEtu(etu);
+             System.out.println("aa " + etu.getNote());
                 if(etu!=null){
                     trouve = true;
                }
@@ -67,13 +68,13 @@ public class Requetes {
         } else {
             try {
                    
-                etu = daoBD.GetEtu(etu);
+               daoBD.GetEtu(etu);
                 
                if(etu!=null){
                     trouve = true;
                }
                
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 System.out.println("Erreur: " + e.getMessage());
             }
 
