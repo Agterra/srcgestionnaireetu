@@ -92,4 +92,38 @@ public class DaoJava {
                }
        return laListe;
    }
+     public int getCount()throws SQLException{
+          int nb=0;
+         String requete = "select count(nom) from JAVA_WEB_G2S3"  ;
+        PreparedStatement pstmt = connexion.prepareStatement(requete);
+          ResultSet rset = pstmt.executeQuery();
+           while(rset.next()) { // traitement du résulat
+                 nb = rset.getInt(1);
+           }
+           return nb;
+     }
+     public void GetAlea(int i) throws SQLException {
+          Etudiant temp = new Etudiant();
+          int cont=0;
+        String requete = "select * from JAVA_WEB_G2S3  ";
+        PreparedStatement pstmt = connexion.prepareStatement(requete);
+      
+
+        ResultSet rset = pstmt.executeQuery();
+
+        while (rset.next()&& cont<=i) {       // traitement du résulat
+
+            String nom = rset.getString(1);
+            String prenom = rset.getString(2);
+            double note = rset.getDouble(3);
+            temp.setNom(nom);
+            temp.setPrenom(prenom);
+            temp.setNote(note);
+            //System.out.println("aa " + nom);
+        }
+
+        rset.close();
+        pstmt.close();
+
+    }
 }

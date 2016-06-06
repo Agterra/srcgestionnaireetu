@@ -6,6 +6,7 @@ import Model.SourceOracleDAO;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Random;
 
 import notes.Etudiant;
 
@@ -51,9 +52,25 @@ public class Requetes {
             return ERREUR_MATIERE;
         }
         /* Recherche étudiant */
-        //   Etudiant etudiant = null;
-
         boolean trouve = false;
+        if (etu.getNom()=="?" && etu.getPrenom()=="?"){
+            int i;
+            boolean m; 
+            Random rand = new Random();
+             m=rand.nextBoolean();
+             if (m==true){
+                 i = rand.nextInt(daoJava.getCount());
+                 daoJava.GetAlea(i);
+                 trouve = true;
+             }else{
+                 i = rand.nextInt(daoBD.getCount());
+                 daoBD.GetAlea(i);
+                 trouve = true;
+             }
+            
+        }
+
+        
         if (matiere.equalsIgnoreCase(MATIERE2)) {
             try {
 
