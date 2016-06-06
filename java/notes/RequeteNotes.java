@@ -62,7 +62,7 @@ public class RequeteNotes extends HttpServlet {
         if (result != OK) {
             switch (result) {
                 case NOT_FOUND:
-                    erreur = "nom incorect";
+                    erreur = "Vos identifiants n'ont pas permis de vous retrouver dans la base de données";
                     break;
                 default:
                     erreur = "Problème d'accès";

@@ -72,4 +72,29 @@ public class DaoBDA {
         pstmt.close();
         return note;
     }
+    public  List<Etudiant> lireLesEtu()throws SQLException{
+       List<Etudiant> laListe = new ArrayList<>();
+       Etudiant temp = new Etudiant();
+       try{
+         String requete = "select * from BDA_G2S3"  ;
+        PreparedStatement pstmt = connexion.prepareStatement(requete);
+          ResultSet rset = pstmt.executeQuery();
+           while(rset.next()) { // traitement du résulat
+                String nomEtu = rset.getString(1);
+                String PrenomEtu = rset.getString(2);
+                double noteEtu = rset.getDouble(3);
+                temp.setNom(nomEtu);
+                temp.setPrenom(PrenomEtu);
+                temp.setNote(noteEtu);
+                laListe.add(temp);
+            }
+            rset.close();
+            pstmt.close();
+       
+         
+               }catch(Exception e){
+                   System.out.println("Erreur: "+e.getMessage());
+               }
+       return laListe;
+   }
 }
