@@ -54,6 +54,7 @@ public class Requetes {
         /* Recherche étudiant */
         boolean trouve = false;
         if (etu.getNom()=="?" && etu.getPrenom()=="?"){
+         try{
             int i;
             boolean m; 
             Random rand = new Random();
@@ -67,7 +68,9 @@ public class Requetes {
                  daoBD.GetAlea(i);
                  trouve = true;
              }
-            
+         } catch (SQLException e) {
+                System.out.println("Erreur: " + e.getMessage());
+            }
         }
 
         
